@@ -2,45 +2,45 @@
 name: Build Tristan's Cubic Game APK
 
 on:
-  workflow_dispatch:
-  push:
-    paths:
-      - 'Tristans_Cubic_Game_Android_Project.zip'
-      - '.github/workflows/build-apk.yml'
+workflow_dispatch:
+push:
+paths:
+- 'Tristans_Cubic_Game_Android_Project.zip'
+- '.github/workflows/build-apk.yml'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+build:
+runs-on: ubuntu-latest
+steps:
+- name: Check out repository
+uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
+- name: Set up Java  
+    uses: actions/setup-java@v4  
+    with:  
+      distribution: temurin  
+      java-version: '17'  
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
+  - name: Set up Gradle  
+    uses: gradle/actions/setup-gradle@v4  
+    with:  
+      gradle-version: '8.9'  
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+  - name: Set up Android SDK  
+    uses: android-actions/setup-android@v3  
 
-      - name: Install Android SDK
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+  - name: Install Android SDK  
+    run: sdkmanager "platforms;android-35" "build-tools;35.0.0"  
 
-      - name: Extract project
-        run: unzip -q Tristans_Cubic_Game_Android_Project.zip
+  - name: Extract project  
+    run: unzip -q Tristans_Cubic_Game_Android_Project.zip  
 
-      - name: Build APK
-        run: gradle -p Tristans_Cubic_Game :app:assembleDebug
+  - name: Build APK  
+    run: gradle -p Tristans_Cubic_Game :app:assembleDebug  
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Tristans-Cubic-Game-APK
-          path: Tristans_Cubic_Game/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+  - name: Upload APK  
+    uses: actions/upload-artifact@v4  
+    with:  
+      name: Tristans-Cubic-Game-APK  
+      path: Tristans_Cubic_Game/app/build/outputs/apk/debug/app-debug.apk  
+      if-no-files-found: error
